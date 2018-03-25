@@ -1,9 +1,7 @@
 package com.example.victor.bestpictures;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
+import android.content.res.Configuration;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.LoaderManager;
 
@@ -12,17 +10,13 @@ import android.os.Bundle;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.preference.Preference;
 import android.support.v7.widget.GridLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -43,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     private final static int ID_MOVIE_LOADER = 0;
-    private final static int GRID_VIEW_SPAN = 2;
     private RecyclerView discoverRV = null;
     private ImageView discoverLogo = null;
     private AppBarLayout discoverAppBarLayout = null;
@@ -68,8 +61,9 @@ public class MainActivity extends AppCompatActivity implements
 
         discoverRV.setVisibility(View.INVISIBLE);
         discoverAppBarLayout.setVisibility(View.INVISIBLE);
+        final int columns = getResources().getInteger(R.integer.movies_columns);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, columns);
 
-        final GridLayoutManager layoutManager = new GridLayoutManager(this, GRID_VIEW_SPAN);
         discoverRV.setLayoutManager(layoutManager);
         discoverRV.setHasFixedSize(true);
         spacing = (int) getResources().getDimension(R.dimen.margin_small);
