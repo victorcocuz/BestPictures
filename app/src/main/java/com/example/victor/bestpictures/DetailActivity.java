@@ -41,6 +41,8 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             movieAwards = extras.getString(NetworkUtils.TMDB_PARAM_AWARDS);
         }
 
+        binding.detailActivityFrameGradient.setVisibility(View.INVISIBLE);
+
         RecyclerView castRV = binding.detailActivityCastRecyclerView;
         LinearLayoutManager layoutManagerCast = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         castRV.setLayoutManager(layoutManagerCast);
@@ -84,6 +86,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         Picasso.with(context)
                 .load(movie.getMovieBackdrop())
                 .into(binding.detailActivityBackdrop);
+        binding.detailActivityFrameGradient.setVisibility(View.VISIBLE);
 
         binding.detailActivityTitle.setText(movie.getMovieTitle());
         binding.detailActivityDirector.setText(context.getResources().getString(R.string.by) + " " + movie.getMovieDirector());
@@ -94,7 +97,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         StringBuilder genresBuilder = new StringBuilder();
         if (movie.getMovieGenres() != null) {
             for (String s : movie.getMovieGenres()) {
-                genresBuilder.append(s + ", ");
+                genresBuilder.append(s).append(", ");
             }
             String genres = genresBuilder.toString();
             genres = genres.substring(0, genres.length() - 2);

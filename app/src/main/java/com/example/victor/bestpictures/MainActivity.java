@@ -1,13 +1,16 @@
 package com.example.victor.bestpictures;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.LoaderManager;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.Preference;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,12 +21,17 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import com.example.victor.bestpictures.Adapters.MovieAdapter;
 import com.example.victor.bestpictures.Data.BestPicturesPreferences;
 import com.example.victor.bestpictures.Model.MovieItem;
 import com.example.victor.bestpictures.Model.RecyclerViewSpacing;
 import com.example.victor.bestpictures.Utilities.NetworkUtils;
+import com.example.victor.bestpictures.Utilities.TmdbJasonUtils;
 import com.example.victor.bestpictures.databinding.ActivityMainBinding;
 
 import java.util.List;
@@ -33,28 +41,81 @@ public class MainActivity extends AppCompatActivity implements
         MovieAdapter.MovieAdapterOnClickHandler {
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
+
     private final static int ID_MOVIE_LOADER = 0;
     private final static int GRID_VIEW_SPAN = 2;
-    RecyclerView discoverRV = null;
-    int spanCount, spacing;
+    private RecyclerView discoverRV = null;
+    private ImageView discoverLogo = null;
+    private AppBarLayout discoverAppBarLayout = null;
+    private ProgressBar discoverRvProgressBar;
+    private int spanCount, spacing;
+    public static int pageCount = 1;
+    private boolean isLoading = false;
 
     private MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+        discoverRvProgressBar = binding.discoverRvProgressBar;
+        discoverRvProgressBar.setVisibility(View.GONE);
+
+        discoverAppBarLayout = binding.appBarLayout;
+        discoverLogo = binding.discoverLogo;
         discoverRV = binding.discoverRv;
-        GridLayoutManager layoutManager = new GridLayoutManager(this, GRID_VIEW_SPAN);
+
+        discoverRV.setVisibility(View.INVISIBLE);
+        discoverAppBarLayout.setVisibility(View.INVISIBLE);
+
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, GRID_VIEW_SPAN);
         discoverRV.setLayoutManager(layoutManager);
         discoverRV.setHasFixedSize(true);
         spacing = (int) getResources().getDimension(R.dimen.margin_small);
         spanCount = layoutManager.getSpanCount();
         discoverRV.addItemDecoration(new RecyclerViewSpacing(spanCount, spacing));
+        discoverRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int visibleItemCount = layoutManager.getChildCount();
+                int totalItemCount = layoutManager.getItemCount();
+                int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+
+                Log.e(LOG_TAG, "visible item count " + visibleItemCount);
+                Log.e(LOG_TAG, "visible total count " + totalItemCount);
+                Log.e(LOG_TAG, "firstvisibleItemPosition " + firstVisibleItemPosition);
+
+                if (!isLoading && pageCount < TmdbJasonUtils.jsonTotalPages) {
+                    if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                            && firstVisibleItemPosition >= 0
+                            && totalItemCount >= NetworkUtils.TMDB_PAGE_SIZE_VALUE) {
+                        isLoading = true;
+                        discoverRvProgressBar.setVisibility(View.VISIBLE);
+                        getSupportLoaderManager().restartLoader(ID_MOVIE_LOADER, null, MainActivity.this);
+                        pageCount++;
+                        Log.e(LOG_TAG, "page count " + pageCount);
+                    }
+                }
+            }
+        });
 
         movieAdapter = new MovieAdapter(this, this);
         discoverRV.setAdapter(movieAdapter);
+
+        binding.discoverSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getSupportLoaderManager().restartLoader(ID_MOVIE_LOADER, null, MainActivity.this);
+                binding.discoverSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
 
         getSupportLoaderManager().initLoader(ID_MOVIE_LOADER, null, this);
 
@@ -68,11 +129,18 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onLoadFinished(Loader<List<MovieItem>> loader, List<MovieItem> data) {
         movieAdapter.addAll(data);
+        discoverRvProgressBar.setVisibility(View.GONE);
+        isLoading = false;
+        discoverLogo.setVisibility(View.GONE);
+        discoverAppBarLayout.setVisibility(View.VISIBLE);
+        discoverRV.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onLoaderReset(Loader<List<MovieItem>> loader) {
         movieAdapter.addAll(null);
+        discoverRvProgressBar.setVisibility(View.GONE);
+        isLoading = false;
     }
 
     @Override
@@ -101,7 +169,11 @@ public class MainActivity extends AppCompatActivity implements
                 BestPicturesPreferences.resetVoteCountPreference(this);
                 getSupportLoaderManager().restartLoader(ID_MOVIE_LOADER, null, this);
                 break;
+            case R.id.action_general_refresh:
+                getSupportLoaderManager().restartLoader(ID_MOVIE_LOADER, null, this);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

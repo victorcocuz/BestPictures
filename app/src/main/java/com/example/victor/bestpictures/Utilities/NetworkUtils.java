@@ -66,12 +66,13 @@ public class NetworkUtils {
     //Fake Parameters
     public final static String TMDB_PARAM_AWARDS = "awards";
 
-    private final static int page = 1;
+    // API Values
     private final static String TMDB_SORT_BY_POPULARITY_DESC = "popularity.desc";
     private final static String TMDB_SORT_BY_RATING_DESC = "vote_average.desc";
     private final static String TMDB_VOTE_COUNT_VALUE = "2500";
+    public final static int TMDB_PAGE_SIZE_VALUE = 20;
 
-    public static URL getUrlForDiscover(Context context) {
+    public static URL getUrlForDiscover(Context context, int page) {
         Uri.Builder builder = new Uri.Builder();
                 builder.scheme(TMDB_SCHEME)
                         .authority(TMDB_AUTHORITY_DATA)
@@ -83,6 +84,7 @@ public class NetworkUtils {
                         .appendQueryParameter(context.getString(R.string.prev_vote_count_key), BestPicturesPreferences.getVoteCountPreference(context))
                         .appendQueryParameter(context.getString(R.string.pref_sort_by_key), BestPicturesPreferences.getSortByPreference(context))
                         .build();
+                Log.e(LOG_TAG, "sdads " + builder.toString());
         return buildUrl(builder.toString());
     }
 

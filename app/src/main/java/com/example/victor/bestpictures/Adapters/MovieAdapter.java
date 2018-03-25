@@ -13,6 +13,7 @@ import com.example.victor.bestpictures.R;
 import com.example.victor.bestpictures.Utilities.BestPicturesUtilities;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ import java.util.List;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
-    private List<MovieItem> movies;
+    private List<MovieItem> movies = new ArrayList<>();
     MovieAdapterOnClickHandler onClickHandler;
     Context context;
     String awards;
@@ -83,7 +84,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public void addAll(List<MovieItem> movies) {
-        this.movies = movies;
+        this.movies.addAll(movies);
         notifyDataSetChanged();
     }
+    public void insertAll(List<MovieItem> movies) {
+        this.movies = movies;
+    }
+
 }

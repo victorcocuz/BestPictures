@@ -38,9 +38,9 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
     public void onBindViewHolder(CastAdapter.CastViewHolder holder, int position) {
         holder.vhTitleView.setText(members.get(position).getCastName());
         holder.vhSubtitleView.setText(members.get(position).getCastSubtitle());
-        Picasso.with(context)
-                .load(members.get(position).getCastProfile())
-                .into(holder.vhProfileView);
+            Picasso.with(context)
+                    .load(members.get(position).getCastProfile())
+                    .into(holder.vhProfileView);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.CastViewHolder
         }
     }
 
-    public void addAll(List<CastMember> members){
+    public void addAll(List<CastMember> members) {
         this.members = members;
         notifyDataSetChanged();
     }

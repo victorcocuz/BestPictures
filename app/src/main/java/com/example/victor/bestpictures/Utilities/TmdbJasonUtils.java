@@ -37,7 +37,7 @@ public class TmdbJasonUtils {
     private final static String TMDB_RUNTIME = "runtime";
     private final static String TMDB_TITLE = "title";
     private final static String TMDB_VOTE_AVERAGE = "vote_average";
-    private final static String TMDB_VOTE_COUNT = "vote_count";
+    private final static String TMDB_TOTAL_PAGES = "total_pages";
 
     //Cast
     private final static String TMDB_CREDITS = "credits";
@@ -59,6 +59,8 @@ public class TmdbJasonUtils {
     private final static String TMDB_REVIEWS = "reviews";
     private final static String TMDB_REVIEWS_AUTHOR = "author";
     private final static String TMDB_REVIEWS_CONTENT = "content";
+
+    public static int jsonTotalPages = 0;
 
     public static MovieItem extractDataFromTmdbJsonMovie(String tmdbJsonResponse) {
         MovieItem movieList = null;
@@ -216,17 +218,17 @@ public class TmdbJasonUtils {
 
                 int jsonID = jsonMovie.optInt(TMDB_ID);
 
-                //Poster
+                //01 Poster
                 String jsonPoster = null;
                 String jsonPosterPath = jsonMovie.optString(TMDB_POSTER_PATH);
                 if (jsonPosterPath != null) {
                     jsonPoster = NetworkUtils.getStringForImageUrl(jsonPosterPath.substring(1), NetworkUtils.TMDB_SIZE_POSTER_SMALL);
                 }
 
-                //Title
+                //02 Title
                 String jsonTitle = jsonMovie.optString(TMDB_TITLE);
 
-                //Vote Average
+                //03 Vote Average
                 String jsonVoteAverage = jsonMovie.optString(TMDB_VOTE_AVERAGE);
 
                 movieList.add(new MovieItem(jsonID,
@@ -247,6 +249,9 @@ public class TmdbJasonUtils {
                         null
                 ));
             }
+
+            //Total Pages
+            jsonTotalPages = jsonResponse.optInt(TMDB_TOTAL_PAGES);
 
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Error parsing JSON results", e);

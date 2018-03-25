@@ -45,14 +45,36 @@
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/discover_rv"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/discover_logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_xsmall"
-            android:layout_marginRight="@dimen/margin_small"
-            android:background="@color/colorAccent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_gravity="center"
+            android:contentDescription="@string/content_description_logo"
+            android:src="@drawable/logo" />
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/discover_swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/discover_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_marginLeft="@dimen/margin_xsmall"
+                android:layout_marginRight="@dimen/margin_small"
+                android:layout_marginStart="@dimen/margin_xsmall"
+                android:background="@color/colorAccent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ProgressBar
+            android:id="@+id/discover_rv_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
@@ -64,4 +86,4 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    </layout>
+</layout>

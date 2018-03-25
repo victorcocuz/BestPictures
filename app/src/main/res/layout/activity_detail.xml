@@ -73,9 +73,10 @@
                             android:layout_height="match_parent"
                             android:contentDescription="@string/content_description_backdrop"
                             android:scaleType="centerCrop"
-                            tools:background="@color/colorAccent" />
+                            android:background="@color/colorPrimary" />
 
                         <View
+                            android:id="@+id/detail_activity_frame_gradient"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/backdrop_gradient" />
