@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/colorPrimaryBright">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/card_movie_poster_view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/container_large_height"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/content_description_movie_poster"
+            android:scaleType="centerCrop"
+            tools:background="@color/colorBright" />
+
+        <TextView
+            android:id="@+id/card_movie_title_view"
+            style="@style/cardTitle"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintTop_toBottomOf="@id/card_movie_poster_view"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/card_movie_awards_view"
+            style="@style/cardSubtitle"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/margin_xxxlarge"
+            android:textSize="@dimen/text_xsmall"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_movie_poster_view"
+            tools:text="Subtitle" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

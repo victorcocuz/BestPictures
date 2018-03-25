@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="pref_sort_by_labels">
+        <item>@string/pref_sort_by_popularity_desc_label</item>
+        <item>@string/pref_sort_by_rating_desc_label</item>
+    </string-array>
+
+    <string-array name="pref_sort_by_values">
+        <item>@string/pref_sort_by_popularity_desc</item>
+        <item>@string/pref_sort_by_rating_desc</item>
+    </string-array>
+
+    <string-array name="awards_wins">
+        <item>@string/awards_won</item>
+        <item>@string/awards_nominated</item>
+    </string-array>
+
+    <string-array name="awards_events">
+        <item>@string/awards_event_oscars</item>
+        <item>@string/awards_event_globes</item>
+        <item>@string/awards_event_bafta</item>
+    </string-array>
+</resources>

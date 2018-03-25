@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_negative_xlarge">-16dp</dimen>
+    <dimen name="margin_negative_medium">-8dp</dimen>
+    <dimen name="margin_negative_xsmall">-2dp</dimen>
+    <dimen name="margin_negative_small">-4dp</dimen>
+    <dimen name="margin_xsmall">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_large">12dp</dimen>
+    <dimen name="margin_xlarge">16dp</dimen>
+    <dimen name="margin_xxlarge">24dp</dimen>
+    <dimen name="margin_xxxlarge">32dp</dimen>
+
+    <dimen name="text_xxsmall">10sp</dimen>
+    <dimen name="text_xsmall">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_large">18sp</dimen>
+    <dimen name="text_xlarge">20sp</dimen>
+
+    <dimen name="container_line">1dp</dimen>
+    <dimen name="container_xxsmall">18dp</dimen>
+    <dimen name="container_xsmall">24dp</dimen>
+    <dimen name="container_small">32dp</dimen>
+    <dimen name="container_medium">40dp</dimen>
+    <dimen name="container_medium_large">56dp</dimen>
+    <dimen name="container_cast_width">100dp</dimen>
+    <dimen name="container_cast_height">150dp</dimen>
+    <dimen name="container_poster_width">120dp</dimen>
+    <dimen name="container_poster_height">180dp</dimen>
+    <dimen name="container_poster_category_height">196dp</dimen>
+    <dimen name="container_backdrop_height">250dp</dimen>
+    <dimen name="container_large_width">168dp</dimen>
+    <dimen name="container_large_height">252dp</dimen>
+    <dimen name="container_large_height_full">312dp</dimen>
+
+    <dimen name="container_xlarge">120dp</dimen>
+    <dimen name="container_xxlarge">180dp</dimen>
+</resources>

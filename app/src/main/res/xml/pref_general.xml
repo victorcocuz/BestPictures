@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListPreference
+        android:defaultValue="@string/pref_sort_by_popularity_desc"
+        android:entries="@array/pref_sort_by_labels"
+        android:entryValues="@array/pref_sort_by_values"
+        android:key="@string/pref_sort_by_key"
+        android:title="@string/pref_sort_by_title" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_vote_count_default_value"
+        android:digits="0123456789"
+        android:inputType="numberDecimal"
+        android:key="@string/prev_vote_count_key"
+        android:lines="1"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_vote_count_title" />
+
+</PreferenceScreen>
+
