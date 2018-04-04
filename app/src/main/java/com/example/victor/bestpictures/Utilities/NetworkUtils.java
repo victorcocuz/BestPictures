@@ -23,7 +23,7 @@ import java.nio.charset.Charset;
 public class NetworkUtils {
 
     private final static String LOG_TAG = NetworkUtils.class.getSimpleName();
-    private final static String TMDB_API_KEY = "5c17b6965b6565524fd0e9dd6fe2a76c";
+    private final static String TMDB_API_KEY = "";
     String credits = "https://api.themoviedb.org/3/movie/269149/credits?api_key=5c17b6965b6565524fd0e9dd6fe2a76c";
     String movie = "https://api.themoviedb.org/3/movie/269149?api_key=5c17b6965b6565524fd0e9dd6fe2a76c&language=en-US";
 
