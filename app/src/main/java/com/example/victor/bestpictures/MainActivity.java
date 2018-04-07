@@ -1,7 +1,7 @@
 package com.example.victor.bestpictures;
 
 import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.SharedPreferences;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.LoaderManager;
 
@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<List<MovieItem>>,
-        MovieAdapter.MovieAdapterOnClickHandler {
+        MovieAdapter.MovieAdapterOnClickHandler{
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements
     private int spanCount, spacing;
     public static int pageCount = 1;
     private boolean isLoading = false;
+    private String preferenceCheck;
 
     private MovieAdapter movieAdapter;
 
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+        preferenceCheck = BestPicturesPreferences.getSortByPreference(this);
 
         discoverRvProgressBar = binding.discoverRvProgressBar;
         discoverRvProgressBar.setVisibility(View.GONE);
@@ -82,10 +84,6 @@ public class MainActivity extends AppCompatActivity implements
                 int totalItemCount = layoutManager.getItemCount();
                 int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
-                Log.e(LOG_TAG, "visible item count " + visibleItemCount);
-                Log.e(LOG_TAG, "visible total count " + totalItemCount);
-                Log.e(LOG_TAG, "firstvisibleItemPosition " + firstVisibleItemPosition);
-
                 if (!isLoading && pageCount < TmdbJasonUtils.jsonTotalPages) {
                     if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
                             && firstVisibleItemPosition >= 0
@@ -94,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements
                         discoverRvProgressBar.setVisibility(View.VISIBLE);
                         getSupportLoaderManager().restartLoader(ID_MOVIE_LOADER, null, MainActivity.this);
                         pageCount++;
-                        Log.e(LOG_TAG, "page count " + pageCount);
                     }
                 }
             }
@@ -122,7 +119,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<List<MovieItem>> loader, List<MovieItem> data) {
-        movieAdapter.addAll(data);
+        if (!preferenceCheck.equals(BestPicturesPreferences.getSortByPreference(this))) {
+            movieAdapter.clearAll();
+            preferenceCheck = BestPicturesPreferences.getSortByPreference(this);
+        }
+        movieAdapter.appendAll(data);
         discoverRvProgressBar.setVisibility(View.GONE);
         isLoading = false;
         discoverLogo.setVisibility(View.GONE);
@@ -132,8 +133,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onLoaderReset(Loader<List<MovieItem>> loader) {
-        movieAdapter.addAll(null);
+        movieAdapter.appendAll(null);
         discoverRvProgressBar.setVisibility(View.GONE);
+        resetPageCount();
         isLoading = false;
     }
 
@@ -170,4 +172,7 @@ public class MainActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
+    public static void resetPageCount() {
+        pageCount = 1;
+    }
 }

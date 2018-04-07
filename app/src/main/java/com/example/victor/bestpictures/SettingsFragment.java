@@ -40,6 +40,7 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
         if (preference != null) {
             if (!(preference instanceof  CheckBoxPreference)) {
                 setPreferenceSummary(preference, sharedPreferences.getString(key, ""));
+                MainActivity.resetPageCount();
             }
         }
     }

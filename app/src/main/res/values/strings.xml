@@ -11,11 +11,14 @@
     <string name="pref_sort_by_key" translatable="false">sort_by</string>
     <string name="pref_sort_by_popularity_desc_label">Popularity</string>
     <string name="pref_sort_by_rating_desc_label">Rating</string>
-    <string name="pref_sort_by_popularity_desc" translatable="false">popularity.desc</string>
-    <string name="pref_sort_by_rating_desc" translatable="false">vote_average.desc</string>
+    <string name="pref_sort_by_popularity_desc" translatable="false">popular</string>
+    <string name="pref_sort_by_rating_desc" translatable="false">top_rated</string>
     <string name="pref_vote_count_title">Vote Count</string>
     <string name="prev_vote_count_key">vote_count.gte</string>
     <string name="pref_vote_count_default_value">2500</string>
+    <!--Strings for different method of retrieving url, based on vote count-->
+    <!--<string name="pref_sort_by_popularity_desc" translatable="false">popularity.desc</string>-->
+    <!--<string name="pref_sort_by_rating_desc" translatable="false">vote_average.desc</string>-->
 
     <!--Awards-->
     <string name="awards_won">Won</string>

@@ -34,7 +34,7 @@ public class MovieLoaderList extends AsyncTaskLoader<List<MovieItem>> {
 
     @Override
     public List<MovieItem> loadInBackground() {
-        URL url = NetworkUtils.getUrlForDiscover(context, MainActivity.pageCount);
+        URL url = NetworkUtils.getUrlForSorting(context, MainActivity.pageCount);
         try {
             String tmdbJsonResponse = NetworkUtils.makeHttpRequest(url);
             List<MovieItem> movies = TmdbJasonUtils.extractDataFromTmdbJsonDiscover(tmdbJsonResponse);
