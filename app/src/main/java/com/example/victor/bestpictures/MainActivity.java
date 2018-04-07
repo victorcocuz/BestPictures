@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements
 
         movieAdapter = new MovieAdapter(this, this);
         discoverRV.setAdapter(movieAdapter);
-
         binding.discoverSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
