@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/colorPrimaryBright">
 
     <android.support.constraint.ConstraintLayout
@@ -31,13 +34,39 @@
         <TextView
             android:id="@+id/card_movie_awards_view"
             style="@style/cardSubtitle"
+            android:layout_marginTop="@dimen/margin_xxxlarge"
             android:ellipsize="end"
             android:maxLines="2"
-            android:layout_marginTop="@dimen/margin_xxxlarge"
             android:textSize="@dimen/text_xsmall"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_movie_poster_view"
             tools:text="Subtitle" />
+
+        <ImageView
+            android:id="@+id/card_movie_star_view"
+            android:layout_width="@dimen/container_xsmall"
+            android:layout_height="@dimen/container_xsmall"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:layout_marginRight="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_xsmall"
+            android:background="@drawable/ic_star_rate"
+            android:contentDescription="@string/content_description_star"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_movie_awards_view" />
+
+        <TextView
+            android:id="@+id/card_movie_rating_view"
+            style="@style/cardSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="@dimen/margin_xsmall"
+            android:textSize="@dimen/text_xsmall"
+            app:layout_constraintBottom_toBottomOf="@id/card_movie_star_view"
+            app:layout_constraintRight_toLeftOf="@id/card_movie_star_view"
+            tools:text="6.5" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/card_movie_star_view" />
     </android.support.constraint.ConstraintLayout>
 
 </android.support.v7.widget.CardView>

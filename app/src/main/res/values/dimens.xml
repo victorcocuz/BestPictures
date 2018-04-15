@@ -24,18 +24,18 @@
     <dimen name="container_xsmall">24dp</dimen>
     <dimen name="container_small">32dp</dimen>
     <dimen name="container_medium">40dp</dimen>
-    <dimen name="container_medium_large">56dp</dimen>
+    <dimen name="container_medium_large">60dp</dimen>
     <dimen name="container_cast_width">100dp</dimen>
     <dimen name="container_cast_height">150dp</dimen>
     <dimen name="container_poster_width">120dp</dimen>
     <dimen name="container_poster_height">180dp</dimen>
     <dimen name="container_poster_category_height">196dp</dimen>
-    <dimen name="container_backdrop_height">250dp</dimen>
+    <dimen name="container_backdrop_height">280dp</dimen>
     <dimen name="container_large_width">168dp</dimen>
     <dimen name="container_large_height">252dp</dimen>
     <dimen name="container_large_height_full">312dp</dimen>
-
     <dimen name="container_xlarge">120dp</dimen>
     <dimen name="container_xxlarge">180dp</dimen>
+    <dimen name="container_app_bar_layout">192dp</dimen>
 
 </resources>

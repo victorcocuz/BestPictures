@@ -7,12 +7,14 @@
     <string name="menu_general_refresh">Refresh</string>
 
     <!--Sort by-->
-    <string name="pref_sort_by_title">Sort By</string>
+    <string name="pref_sort_by_title">Sort</string>
     <string name="pref_sort_by_key" translatable="false">sort_by</string>
-    <string name="pref_sort_by_popularity_desc_label">Popularity</string>
-    <string name="pref_sort_by_rating_desc_label">Rating</string>
+    <string name="pref_sort_by_popularity_desc_label">By Popularity</string>
+    <string name="pref_sort_by_rating_desc_label">By Rating</string>
+    <string name="pref_sort_by_favorite_label">Favorites</string>
     <string name="pref_sort_by_popularity_desc" translatable="false">popular</string>
     <string name="pref_sort_by_rating_desc" translatable="false">top_rated</string>
+    <string name="pref_sort_by_favorite" translatable="false">favorite</string>
     <string name="pref_vote_count_title">Vote Count</string>
     <string name="prev_vote_count_key">vote_count.gte</string>
     <string name="pref_vote_count_default_value">2500</string>
@@ -43,6 +45,7 @@
     <string name="popularity">Popularity: </string>
     <string name="budget">Budget: </string>
     <string name="revenue">Revenue: </string>
+    <string name="mins">mins</string>
 
     <!--ContentDescription-->
     <string name="content_description_logo">Logo</string>
@@ -51,6 +54,8 @@
     <string name="content_description_star">Star Rating</string>
     <string name="content_description_movie_poster">Movie Poster</string>
     <string name="content_description_cast_poster">Cast Poster</string>
+    <string name="content_description_favorite">Favorite</string>
+    <string name="content_description_play">Play Video</string>
 
     <!--Lorem Ipsum-->
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in libero tincidunt, finibus dolor non, tristique ligula. Cras sit amet scelerisque dui, quis hendrerit quam. Curabitur eu sollicitudin sapien. Donec sagittis nulla lorem. Cras nec nisl in erat fermentum finibus laoreet a sapien. Duis magna purus, semper ac neque at, imperdiet eleifend lectus. Mauris quis tristique justo. Etiam in iaculis magna. Integer ac mi vitae mi viverra congue at in lectus. Suspendisse placerat elementum dui ut accumsan. Phasellus fringilla nisi eget magna gravida, nec tristique turpis mattis.</string>
