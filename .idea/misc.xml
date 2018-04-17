@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="EntryPointsManager">
+    <entry_points version="2.0">
+      <entry_point TYPE="field" FQNAME="com.example.android.bestpictures.adapters.ReviewAdapter LOG_TAG" />
+      <entry_point TYPE="field" FQNAME="com.example.android.bestpictures.utilities.RecyclerViewSpacing LOG_TAG" />
+      <entry_point TYPE="field" FQNAME="com.example.android.bestpictures.DetailActivity LOG_TAG" />
+      <entry_point TYPE="field" FQNAME="com.example.android.bestpictures.MainActivity LOG_TAG" />
+      <entry_point TYPE="field" FQNAME="com.example.android.bestpictures.adapters.MovieAdapter LOG_TAG" />
+    </entry_points>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />

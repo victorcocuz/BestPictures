@@ -9,6 +9,4 @@
     <color name="colorWhiteTint">#80ffffff</color>
     <color name="colorGreyTint">#aa000000</color>
     <color name="colorTextGrey">#aaa</color>
-    <color name="colorBlack">#000</color>
-    <color name="colorTransparent">#ffffffff</color>
 </resources>

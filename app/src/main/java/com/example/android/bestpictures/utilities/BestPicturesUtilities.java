@@ -6,11 +6,11 @@ import com.example.android.bestpictures.R;
 
 import java.util.Random;
 
-/**
+/******
  * Created by Victor on 3/21/2018.
- */
+ ******/
 
-public class BestPicturesUtilities {
+class BestPicturesUtilities {
 
     private BestPicturesUtilities() {
         //Empty constructor
@@ -27,7 +27,7 @@ public class BestPicturesUtilities {
         String otherWinsCount = String.valueOf(random.nextInt(30 - 5));
         String otherNominationsCount = String.valueOf(random.nextInt(100 - 10));
 
-        String awards = awardsWins + " "
+        return awardsWins + " "
                 + awardsCount + " "
                 + awardsEvents + " "
                 + context.getResources().getString(R.string.awards_another) + " "
@@ -36,7 +36,5 @@ public class BestPicturesUtilities {
                 + context.getResources().getString(R.string.awards_another_and) + " "
                 + otherNominationsCount + " "
                 + context.getResources().getString(R.string.awards_another_nominations);
-
-        return awards;
     }
 }

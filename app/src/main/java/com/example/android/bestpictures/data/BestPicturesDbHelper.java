@@ -8,12 +8,12 @@ import com.example.android.bestpictures.data.BestPicturesContract.CastEntry;
 import com.example.android.bestpictures.data.BestPicturesContract.MoviesEntry;
 import com.example.android.bestpictures.data.BestPicturesContract.ReviewsEntry;
 
-/**
+/******
  * Created by Victor on 4/7/2018.
- */
+ ******/
 
-public class BestPicturesDbHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "movies.db";
+class BestPicturesDbHelper extends SQLiteOpenHelper {
+    private static final String DATABASE_NAME = "movies.db";
     private static final int DATABASE_VERSION = 1;
 
     public BestPicturesDbHelper(Context context) {

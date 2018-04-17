@@ -4,15 +4,15 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
+/******
  * Created by Victor on 3/20/2018.
- */
+ ******/
 
 public class RecyclerViewSpacing extends RecyclerView.ItemDecoration {
 
     public static final String LOG_TAG = RecyclerViewSpacing.class.getSimpleName();
-    private int spanCount;
-    private int spacing;
+    private final int spanCount;
+    private final int spacing;
 
     public RecyclerViewSpacing (int spanCount, int spacing) {
         this.spanCount = spanCount;

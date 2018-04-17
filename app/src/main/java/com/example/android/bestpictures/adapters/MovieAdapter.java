@@ -2,6 +2,7 @@ package com.example.android.bestpictures.adapters;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +18,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
+/******
  * Created by Victor on 3/10/2018.
- */
+ ******/
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private static final String LOG_TAG = MovieAdapter.class.getSimpleName();
-    private List<MovieItem> movies = new ArrayList<>();
-    private MovieAdapterOnClickHandler onClickHandler;
+    private final List<MovieItem> movies = new ArrayList<>();
+    private final MovieAdapterOnClickHandler onClickHandler;
+    private final Context context;
     private Cursor cursor;
-    private Context context;
     private boolean isCursor = false;
 
     private String awards;
@@ -37,15 +38,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.onClickHandler = onClickHandler;
     }
 
+    @NonNull
     @Override
-    public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_movie, parent, false);
         view.setFocusable(true);
         return new MovieViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         String title;
         String poster;
         String voteAverage;
@@ -79,9 +81,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 return cursor.getCount();
             }
         } else {
-            if (movies != null) {
-                return movies.size();
-            }
+            return movies.size();
         }
         return 0;
     }
@@ -93,6 +93,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
                 this.cursor = (Cursor) object;
             } else {
                 isCursor = false;
+                //noinspection unchecked
                 this.movies.addAll((List<MovieItem>) object);
             }
             notifyDataSetChanged();
@@ -109,10 +110,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        private TextView vhTitleView;
-        private TextView vhAwardsView;
-        private ImageView vhPosterView;
-        private TextView vhRatingView;
+        private final TextView vhTitleView;
+        private final TextView vhAwardsView;
+        private final ImageView vhPosterView;
+        private final TextView vhRatingView;
 
         MovieViewHolder(View itemView) {
             super(itemView);

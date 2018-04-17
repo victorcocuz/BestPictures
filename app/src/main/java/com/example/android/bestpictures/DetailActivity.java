@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -33,43 +34,20 @@ import java.util.List;
 
 public class DetailActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks {
 
-    //Static constants
-    public static final int ID_MOVIE_CURSOR_LOADER = 1;
-    public static final int ID_CAST_CURSOR_LOADER = 2;
-    public static final int ID_REVIEW_CURSOR_LOADER = 3;
-    public static final int ID_CREW_CURSOR_LOADER = 4;
     public static final int ID_MOVIE_LOADER = 1000;
     public static final int ID_VIDEO_LOADER = 1001;
-    public static final int ID_CAST_ADAPTER = 100;
-    public static final int ID_CREW_ADAPTER = 100;
+    //Static constants
+    private static final int ID_MOVIE_CURSOR_LOADER = 1;
+    private static final int ID_CAST_CURSOR_LOADER = 2;
+    private static final int ID_REVIEW_CURSOR_LOADER = 3;
+    private static final int ID_CREW_CURSOR_LOADER = 4;
+    //    public static final int ID_CAST_ADAPTER = 100;
+//    public static final int ID_CREW_ADAPTER = 100;
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
+    private static final String LIFECYCLE_CALLBACKS_SCROLL_VIEW = "KeyForScrollViewState";
     private static String url;
-    //DetailActivity fields
-    String movieBackdrop = null;
-    int movieBudget = 0;
-    String movieGenres = null;
-    List<String> movieGenresList = null;
-    String movieOverview = null;
-    String moviePopularity = null;
-    String moviePoster = null;
-    String movieReleaseDate = null;
-    int movieRevenue = 0;
-    int movieRuntime = 0;
-    String movieTitle = null;
-    String movieVoteAverage = null;
-    String movieDirector = null;
-    List<CastMember> castMembers = null;
-    List<CastMember> crewMembers = null;
-    List<ReviewItem> reviewItems = null;
-    private ActivityDetailBinding binding;
-    private CastAdapter castAdapter, crewAdapter;
-    private ReviewAdapter reviewAdapter;
-    private boolean IS_FAVORITE = false;
-    //Received from intent
-    private int movieId;
-    private String movieAwards;
     //Movie projection
-    private String[] movieProjection = new String[]{
+    private final String[] movieProjection = new String[]{
             MoviesEntry.COLUMN_MOVIE_ID,
             MoviesEntry.COLUMN_MOVIE_BACKDROP,
             MoviesEntry.COLUMN_MOVIE_BUDGET,
@@ -85,20 +63,41 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             MoviesEntry.COLUMN_MOVIE_DIRECTOR,
             MoviesEntry.COLUMN_MOVIE_AWARDS,
             MoviesEntry.COLUMN_MOVIE_VIDEO_URL};
-
     //Cast projection
-    private String[] castProjection = new String[]{
+    private final String[] castProjection = new String[]{
             CastEntry.COLUMN_CAST_MOVIE_ID,
             CastEntry.COLUMN_CAST_TYPE,
             CastEntry.COLUMN_CAST_NAME,
             CastEntry.COLUMN_CAST_SUBTITLE,
             CastEntry.COLUMN_CAST_PROFILE};
-
     //Crew projection
-    private String[] reviewsProjection = new String[]{
+    private final String[] reviewsProjection = new String[]{
             ReviewsEntry.COLUMN_REVIEW_MOVIE_ID,
             ReviewsEntry.COLUMN_REVIEW_AUTHOR,
             ReviewsEntry.COLUMN_REVIEW_CONTENT};
+    //DetailActivity fields
+    private String movieBackdrop = null;
+    private int movieBudget = 0;
+    private String movieGenres = null;
+    private String movieOverview = null;
+    private String moviePopularity = null;
+    private String moviePoster = null;
+    private String movieReleaseDate = null;
+    private int movieRevenue = 0;
+    private int movieRuntime = 0;
+    private String movieTitle = null;
+    private String movieVoteAverage = null;
+    private String movieDirector = null;
+    private List<CastMember> castMembers = null;
+    private List<CastMember> crewMembers = null;
+    private List<ReviewItem> reviewItems = null;
+    private ActivityDetailBinding binding;
+    private CastAdapter castAdapter, crewAdapter;
+    private ReviewAdapter reviewAdapter;
+    private boolean IS_FAVORITE = false;
+    //Received from intent
+    private int movieId;
+    private String movieAwards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +166,30 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray(LIFECYCLE_CALLBACKS_SCROLL_VIEW,
+                new int[]{binding.detailActivityNestedScrollView.getScrollX(), binding.detailActivityNestedScrollView.getScrollY()});
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            final int[] position = savedInstanceState.getIntArray(LIFECYCLE_CALLBACKS_SCROLL_VIEW);
+            if (position != null) {
+                binding.detailActivityNestedScrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.detailActivityNestedScrollView.scrollTo(position[0], position[1]);
+                    }
+                });
+            }
+        }
+    }
+
+    @NonNull
+    @Override
     public Loader onCreateLoader(int id, Bundle args) {
         switch (id) {
             case ID_MOVIE_CURSOR_LOADER:
@@ -186,12 +209,12 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
             case ID_VIDEO_LOADER:
                 return new MovieDetailLoader(this, movieId, ID_VIDEO_LOADER);
             default:
-                return null;
+                return new MovieDetailLoader(this, movieId, ID_MOVIE_LOADER);
         }
     }
 
     @Override
-    public void onLoadFinished(Loader loader, Object data) {
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
         switch (loader.getId()) {
             case ID_MOVIE_CURSOR_LOADER:
                 Cursor movieCursor = (Cursor) data;
@@ -233,7 +256,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
+    public void onLoaderReset(@NonNull Loader loader) {
     }
 
     private void populateMovieValues(Context context, Object object, int type) {
@@ -257,7 +280,7 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
                 MovieItem movieItem = (MovieItem) object;
                 movieBackdrop = movieItem.getMovieBackdrop();
                 movieBudget = movieItem.getMovieBudget();
-                movieGenresList = movieItem.getMovieGenres();
+                List<String> movieGenresList = movieItem.getMovieGenres();
                 StringBuilder genresBuilder = new StringBuilder();
                 if (movieGenresList != null) {
                     for (String s : movieGenresList) {
@@ -323,11 +346,10 @@ public class DetailActivity extends AppCompatActivity implements LoaderManager.L
         binding.detailActivityRevenue.setText(String.valueOf(movieRevenue));
 
         //10 Runtime
-        StringBuilder builder = new StringBuilder();
-        builder.append(movieRuntime)
-                .append(" ")
-                .append(getResources().getString(R.string.mins));
-        binding.detailActivityRuntime.setText(builder.toString());
+        String builder = String.valueOf(movieRuntime) +
+                " " +
+                getResources().getString(R.string.mins);
+        binding.detailActivityRuntime.setText(builder);
 
         //11 Title
         binding.detailActivityCollapsingToolbar.setTitle(movieTitle);

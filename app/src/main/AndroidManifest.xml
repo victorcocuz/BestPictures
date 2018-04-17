@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.bestpictures">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,10 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.example.android.bestpictures.MainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +24,13 @@
         </activity>
         <activity
             android:name="com.example.android.bestpictures.DetailActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
             android:parentActivityName="com.example.android.bestpictures.MainActivity"
-            android:theme="@style/DetailActivityTheme" />
+            android:theme="@style/DetailActivityTheme"
+            tools:targetApi="jelly_bean" />
         <activity
             android:name="com.example.android.bestpictures.SettingsActivity"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            tools:targetApi="jelly_bean" />
 
         <provider
             android:name=".data.BestPicturesProvider"

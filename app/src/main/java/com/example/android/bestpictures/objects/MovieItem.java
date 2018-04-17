@@ -3,30 +3,30 @@ package com.example.android.bestpictures.objects;
 
 import java.util.List;
 
-/**
+/******
  * Created by Victor on 3/10/2018.
- */
+ ******/
 
 public class MovieItem {
 
-    private int movieId;
-    private String movieBackdrop;
-    private int movieBudget;
-    private List<String> movieGenres;
-    private String movieOverview;
-    private String moviePopularity;
-    private String moviePoster;
-    private String movieReleaseDate;
-    private int movieRevenue;
-    private int movieRuntime;
-    private String movieTitle;
-    private String movieVoteAverage;
-    private List<CastMember> movieCastMembers;
-    private List<CastMember> movieCrewMembers;
-    private String movieDirector;
-    private List<ReviewItem> movieReviewItems;
-    private String movieAwards;
-    private String movieVideoKey;
+    private final int movieId;
+    private final String movieBackdrop;
+    private final int movieBudget;
+    private final List<String> movieGenres;
+    private final String movieOverview;
+    private final String moviePopularity;
+    private final String moviePoster;
+    private final String movieReleaseDate;
+    private final int movieRevenue;
+    private final int movieRuntime;
+    private final String movieTitle;
+    private final String movieVoteAverage;
+    private final List<CastMember> movieCastMembers;
+    private final List<CastMember> movieCrewMembers;
+    private final String movieDirector;
+    private final List<ReviewItem> movieReviewItems;
+    private final String movieAwards;
+    private final String movieVideoKey;
 
 
     public MovieItem(int movieId,

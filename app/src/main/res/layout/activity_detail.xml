@@ -6,6 +6,7 @@
     tools:context="com.example.android.bestpictures.DetailActivity">
 
     <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/detail_activity_coordinator_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
@@ -126,6 +127,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
+            android:id="@+id/detail_activity_nested_scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"

@@ -16,20 +16,20 @@ import com.example.android.bestpictures.data.BestPicturesContract.CastEntry;
 import com.example.android.bestpictures.data.BestPicturesContract.MoviesEntry;
 import com.example.android.bestpictures.data.BestPicturesContract.ReviewsEntry;
 
-/**
+/******
  * Created by Victor on 4/8/2018.
- */
+ ******/
 
 public class BestPicturesProvider extends ContentProvider {
-    public static final int CODE_MOVIES = 100;
-    public static final int CODE_MOVIES_ID = 101;
-    public static final int CODE_CAST = 200;
-    public static final int CODE_REVIEW = 300;
+    private static final int CODE_MOVIES = 100;
+    private static final int CODE_MOVIES_ID = 101;
+    private static final int CODE_CAST = 200;
+    private static final int CODE_REVIEW = 300;
     private static final String LOG_TAG = BestPicturesProvider.class.getSimpleName();
     private static final UriMatcher uriMatcher = buildUriMatcher();
     private BestPicturesDbHelper dbHelper;
 
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
         final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(BestPicturesContract.BP_CONTENT_AUTHORITY, BestPicturesContract.BP_PATH_MOVIES, CODE_MOVIES);
         uriMatcher.addURI(BestPicturesContract.BP_CONTENT_AUTHORITY, BestPicturesContract.BP_PATH_MOVIES + "/#", CODE_MOVIES_ID);

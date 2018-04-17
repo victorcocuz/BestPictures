@@ -9,6 +9,7 @@
     android:layout_marginRight="@dimen/margin_small"
     android:layout_marginTop="@dimen/margin_medium"
     android:clickable="true"
+    android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/colorPrimaryBright">

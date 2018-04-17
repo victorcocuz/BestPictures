@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -39,22 +41,25 @@ public class MainActivity extends AppCompatActivity implements
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
     private final static int ID_MOVIE_LIST_LOADER = 0;
+    private static final String LIFECYCLE_CALLBACKS_LAYOUT_MANAGER_KEY = "KeyForLayoutManagerState";
+    private static final String LIFECYCLE_CALLBACKS_PAGE_COUNT = "KeyForPageCountState";
     public static int pageCount = 1;
-    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
-    private RecyclerView discoverRV = null;
-    private ImageView discoverLogo = null;
-    private ActionBar discoverActionBarLayout = null;
-    private ProgressBar discoverRvProgressBar;
-    private int spanCount, spacing;
-    private boolean isLoading = false;
-    private MovieAdapter movieAdapter;
-
-    private String[] projection = new String[]{
+    private final String[] projection = new String[]{
             MoviesEntry.COLUMN_MOVIE_ID,
             MoviesEntry.COLUMN_MOVIE_TITLE,
             MoviesEntry.COLUMN_MOVIE_AWARDS,
             MoviesEntry.COLUMN_MOVIE_POSTER,
             MoviesEntry.COLUMN_MOVIE_VOTE_AVERAGE};
+    Parcelable savedLayoutManagerState;
+    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
+    private RecyclerView discoverRV = null;
+    private ImageView discoverLogo = null;
+    private ActionBar discoverActionBarLayout = null;
+    private ProgressBar discoverRvProgressBar;
+    private boolean isLoading = false;
+    private MovieAdapter movieAdapter;
+    //    private int lastFirstVisiblePosition;
+    private GridLayoutManager layoutManager;
 
     public static void resetPageCount() {
         pageCount = 1;
@@ -66,11 +71,12 @@ public class MainActivity extends AppCompatActivity implements
         Stetho.initializeWithDefaults(this);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-
         discoverRvProgressBar = binding.discoverRvProgressBar;
         discoverRvProgressBar.setVisibility(View.GONE);
         discoverActionBarLayout = getSupportActionBar();
-        discoverActionBarLayout.hide();
+        if (discoverActionBarLayout != null) {
+            discoverActionBarLayout.hide();
+        }
         discoverActionBarLayout.setTitle(BestPicturesPreferences.getSortByPreference(getApplicationContext()));
         discoverLogo = binding.discoverLogo;
 
@@ -78,11 +84,11 @@ public class MainActivity extends AppCompatActivity implements
         discoverRV = binding.discoverRv;
         discoverRV.setVisibility(View.INVISIBLE);
         final int columns = getResources().getInteger(R.integer.movies_columns);
-        final GridLayoutManager layoutManager = new GridLayoutManager(this, columns);
+        layoutManager = new GridLayoutManager(this, columns);
         discoverRV.setLayoutManager(layoutManager);
         discoverRV.setHasFixedSize(true);
-        spacing = (int) getResources().getDimension(R.dimen.margin_small);
-        spanCount = layoutManager.getSpanCount();
+        int spacing = (int) getResources().getDimension(R.dimen.margin_small);
+        int spanCount = layoutManager.getSpanCount();
         discoverRV.addItemDecoration(new RecyclerViewSpacing(spanCount, spacing));
         discoverRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -132,6 +138,26 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+//        lastFirstVisiblePosition = ((GridLayoutManager) discoverRV.getLayoutManager()).findFirstVisibleItemPosition();
+        outState.putInt(LIFECYCLE_CALLBACKS_PAGE_COUNT, pageCount);
+        outState.putParcelable(LIFECYCLE_CALLBACKS_LAYOUT_MANAGER_KEY, layoutManager.onSaveInstanceState());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+//            (discoverRV.getLayoutManager()).scrollToPosition(lastFirstVisiblePosition);
+            pageCount = savedInstanceState.getInt(LIFECYCLE_CALLBACKS_PAGE_COUNT);
+            savedLayoutManagerState = savedInstanceState.getParcelable(LIFECYCLE_CALLBACKS_LAYOUT_MANAGER_KEY);
+            discoverRV.getLayoutManager().onRestoreInstanceState(savedLayoutManagerState);
+        }
+    }
+
+    @NonNull
+    @Override
     public Loader onCreateLoader(int id, Bundle args) {
         if (BestPicturesPreferences.getSortByPreference(this).equals(getString(R.string.pref_sort_by_favorite))) {
             return new CursorLoader(this, MoviesEntry.MOVIES_CONTENT_URI, projection, null, null, null);
@@ -141,14 +167,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onLoadFinished(Loader loader, Object data) {
-
+    public void onLoadFinished(@NonNull Loader loader, Object data) {
         if (data instanceof Cursor) {
             Cursor cursor = (Cursor) data;
             movieAdapter.appendAll(cursor);
         } else {
+            //noinspection unchecked
             List<MovieItem> movieItems = (List<MovieItem>) data;
             movieAdapter.appendAll(movieItems);
+            discoverRV.getLayoutManager().onRestoreInstanceState(savedLayoutManagerState);
         }
         discoverRvProgressBar.setVisibility(View.GONE);
         isLoading = false;
@@ -158,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
+    public void onLoaderReset(@NonNull Loader loader) {
         movieAdapter.appendAll(null);
         discoverRvProgressBar.setVisibility(View.GONE);
         resetPageCount();

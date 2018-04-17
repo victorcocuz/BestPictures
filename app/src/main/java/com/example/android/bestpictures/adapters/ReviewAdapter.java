@@ -1,6 +1,7 @@
 package com.example.android.bestpictures.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,29 +13,30 @@ import com.example.android.bestpictures.objects.ReviewItem;
 
 import java.util.List;
 
-/**
+/******
  * Created by Victor on 3/17/2018.
- */
+ ******/
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
     private static final String LOG_TAG = ReviewAdapter.class.getSimpleName();
-    private Context context;
+    private final Context context;
     private List<ReviewItem> reviews;
 
     public ReviewAdapter(Context context) {
         this.context = context;
     }
 
+    @NonNull
     @Override
-    public ReviewAdapter.ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ReviewAdapter.ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_review, parent, false);
         view.setFocusable(true);
         return new ReviewViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ReviewAdapter.ReviewViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ReviewAdapter.ReviewViewHolder holder, int position) {
         holder.vhAuthorView.setText(reviews.get(position).getReviewAuthor());
         holder.vhContentView.setText(reviews.get(position).getReviewContent());
     }
@@ -53,8 +55,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     }
 
     public class ReviewViewHolder extends RecyclerView.ViewHolder {
-        private TextView vhAuthorView;
-        private TextView vhContentView;
+        private final TextView vhAuthorView;
+        private final TextView vhContentView;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);

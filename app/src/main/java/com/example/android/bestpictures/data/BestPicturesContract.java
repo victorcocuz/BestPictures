@@ -4,19 +4,19 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
+/******
  * Created by Victor on 4/7/2018.
- */
+ ******/
 
 public class BestPicturesContract {
-    public static final String BP_SCHEME = "content://";
     public static final String BP_CONTENT_AUTHORITY = "com.example.android.bestpictures";
-    public static final Uri BP_BASE_CONTENT_URI = Uri.parse(BP_SCHEME + BP_CONTENT_AUTHORITY);
     public final static String BP_PATH_MOVIES = "movies";
     public final static String BP_PATH_CAST = "cast";
     public final static String BP_PATH_REVIEWS = "reviews";
     public static final String BP_CONTENT_LIST_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BP_CONTENT_AUTHORITY + "/" + BP_PATH_MOVIES;
     public static final String BP_CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BP_CONTENT_AUTHORITY + "/" + BP_PATH_MOVIES;
+    private static final String BP_SCHEME = "content://";
+    private static final Uri BP_BASE_CONTENT_URI = Uri.parse(BP_SCHEME + BP_CONTENT_AUTHORITY);
 
     public static final class MoviesEntry implements BaseColumns {
         public static final Uri MOVIES_CONTENT_URI = BP_BASE_CONTENT_URI.buildUpon()

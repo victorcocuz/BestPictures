@@ -11,16 +11,16 @@ import com.example.android.bestpictures.utilities.TmdbJsonUtils;
 import java.io.IOException;
 import java.net.URL;
 
-/**
+/******
  * Created by Victor on 3/11/2018.
- */
+ ******/
 
 public class MovieDetailLoader extends AsyncTaskLoader<Object> {
 
     private final static String LOG_TAG = MovieDetailLoader.class.getSimpleName();
 
-    private int movieId;
-    private int loaderId;
+    private final int movieId;
+    private final int loaderId;
 
     public MovieDetailLoader(Context context, int id, int loaderId) {
         super(context);
